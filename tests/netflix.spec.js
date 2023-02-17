@@ -32,7 +32,7 @@ const invalidEmail = [{
 
 // 1. Failed log in scenario using invalidEmail test data above
 invalidEmail.forEach(data => {
-  test(`failed log in ${data.email}`, async ({ page }) => {
+  test(`failed email ${data.email}`, async ({ page }) => {
     // Go to Netflix.com
     await page.goto("https://www.netflix.com");
   
@@ -57,32 +57,30 @@ invalidEmail.forEach(data => {
   });
 });
 
-// 1. Failed log in scenario using invalid password
-invalidEmail.forEach(data => {
-  test(`failed log in ${data.email}`, async ({ page }) => {
-    // Go to Netflix.com
-    await page.goto("https://www.netflix.com");
-  
-    // Click Sign in link
-    await page.getByRole('link', { name: /Sign In/ }).click();
-  
-    // Click and fill the Email field with valid email
-    await page.getByText('Email or phone number').click();
-    await page.getByLabel('Email or phone number').fill('safitri@myemail.com');
-  
-    // Click and fill the Password field with valid pasword
-    await page.getByText('Password').click();
-    await page.getByLabel('Password').fill(data.password);
-  
-    // Click sign in button
-    await page.getByRole('button', { name: 'Sign In' }).click();
-  
-    // Verify that there is error message when log in is failed
-    await expect(page.locator('[data-uia="text"]')).toHaveText(
-      'Sorry, we can\'t find an account with this email address. Please try again or create a new account.'
-    );
-  });
-})
+// 2. Failed log in scenario using invalid password
+test('failed password log in', async ({ page }) => {
+  // Go to Netflix.com
+  await page.goto("https://www.netflix.com");
+
+  // Click Sign in link
+  await page.getByRole('link', { name: /Sign In/ }).click();
+
+  // Click and fill the Email field with valid email
+  await page.getByText('Email or phone number').click();
+  await page.getByLabel('Email or phone number').fill('safitri@myemail.com');
+
+  // Click and fill the Password field with valid pasword
+  await page.getByText('Password').click();
+  await page.getByLabel('Password').fill('1234');
+
+  // Click sign in button
+  await page.getByRole('button', { name: 'Sign In' }).click();
+
+  // Verify that there is error message when log in is failed
+  await expect(page.locator('[data-uia="text"]')).toHaveText(
+    'Incorrect password. Please try again or you can reset your password.'
+  );
+});
 
 
 // 3. Successful log in scenario when email/password combination is valid
