@@ -1,0 +1,16 @@
+{
+  "name": "qawolf-take-home",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@playwright/test": "^1.30.0",
+    "playwright": "^1.30.0"
+  }
+}
